@@ -85,6 +85,7 @@ def main():
     st.markdown('<div class="white_text" style="margin-bottom:-40px;">Enter citation from your favourite movie or choose at random</div>', unsafe_allow_html=True)
     placeholder = st.empty()
     input = placeholder.text_input("", )
+    input = placeholder.text_input("")
     if st.button("I'm feeling lucky"):
         input = placeholder.text_input("", value=random_inputs[randrange(len(random_inputs))])
     if input:
@@ -131,9 +132,6 @@ def show_pie_chart(sizes, lables):
         plot_bgcolor='rgba(0,0,0,0)',
         legend = dict(font = dict(size = 20, color = "#FFF"))
     )
-    #fig, ax = plt.subplots()
-    #ax.pie(sizes, labels=lables, autopct='%1.1f%%', startangle=90)
-    #ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     st.plotly_chart(fig)
 
 def get_pie_sizes_and_lables(multilabel_binarizer, decision_function_output):
@@ -161,10 +159,10 @@ def train(x, y):
         'tfidf__use_idf': ([False]),
         'tfidf__norm': (['l2'])
     }
-    grid_search = GridSearchCV(pipeline, parameters, n_jobs=-1, verbose=3)
+    grid_search = GridSearchCV(pipeline, parameters, n_jobs=-1, verbose=3, cv=2)
     grid_search.fit(x_train, y_train)
     print(grid_search.best_params_)
-    grid_search.refit
+    res = grid_search.refit
     y_pred = grid_search.predict(x_test)
     y_pred = (y_pred >= 0.6).astype(int)
     print(f1_score(y_test, y_pred, average="micro"))
@@ -216,7 +214,3 @@ def clean_y(text):
 
 if __name__ == "__main__":
     main()
-
-    #beta-expander
-    #желтый стиль на кнопку
-    #
