@@ -84,7 +84,6 @@ def main():
     random_inputs = read_test_data()
     st.markdown('<div class="white_text" style="margin-bottom:-40px;">Enter citation from your favourite movie or choose at random</div>', unsafe_allow_html=True)
     placeholder = st.empty()
-    input = placeholder.text_input("", )
     input = placeholder.text_input("")
     if st.button("I'm feeling lucky"):
         input = placeholder.text_input("", value=random_inputs[randrange(len(random_inputs))])
